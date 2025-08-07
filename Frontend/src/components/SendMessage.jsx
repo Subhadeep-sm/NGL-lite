@@ -1,23 +1,45 @@
 import { useState } from 'react';
-import { Button } from './Button';
-import { Input } from './Input';
-import { Textarea } from './Textarea';
-import { Card, CardContent } from './Card';
+import { Button } from './ui/Button';
+import { Input } from './ui/Input';
+import { Textarea } from './ui/Textarea';
+import { Card, CardContent } from './ui/Card';
 import { motion } from 'framer-motion';
 
 export default function AnonymousMessagePage() {
-  const [username, setUsername] = useState('');
+  // const [username, setUsername] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleSubmit = () => {
-    if (message.trim()) {
-      alert(`Anonymous message sent to @${username || 'someone'}!`);
-      setMessage('');
+  const handleSubmit = async () => {
+  if (message.trim()) {
+    try {
+      const response = await fetch('https://well-kati-koyebdeployacc1-2eef9d50.koyeb.app/api/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: message.trim()
+        })
+      });
+
+      if (response.ok) {
+        alert(`Anonymous message sent successfully!`);
+        setMessage('');
+      } else {
+        const errorData = await response.text();
+        alert('Failed to send message: ' + errorData);
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      alert('An error occurred while sending the message.');
     }
-  };
+  }
+};
+
+//mt-[-100vh]  min-h-screen 
 
   return (
-    <div className="min-h-screen bg-transparent mt-[-100vh]   flex items-center justify-center px-4 py-10">
+    <div className=" bg-transparent fixed z-9999 lg:top-[15vh] top-10 justify-self-center flex items-center justify-center px-4 py-10">
       <motion.div
         className="w-full max-w-xl"
         initial={{ opacity: 0, y: 40 }}
@@ -30,7 +52,7 @@ export default function AnonymousMessagePage() {
             <p className="text-sm text-violet-300 text-center mb-6">
               Write your heart out. The recipient will never know it's you.
             </p>
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <label className="text-violet-200 text-sm">Username (Optional)</label>
               <Input
                 type="text"
@@ -39,7 +61,7 @@ export default function AnonymousMessagePage() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
-            </div>
+            </div> */}
             <div className="mb-6">
               <label className="text-violet-200 text-sm">Your Message</label>
               <Textarea
