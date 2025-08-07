@@ -30,7 +30,7 @@ export default function AllMessagesPage() {
   return (
 
     //bg-gradient-to-b from-[#1F1B3A] to-[#2C2555]
-    <div className="min-h-screen fixed top-0 justify-self-center py-10 px-4 flex justify-center">
+<div className="min-h-screen relative py-10 px-4 flex justify-center z-10 bg-transparent">
       <motion.div
         className="w-full max-w-4xl"
         initial={{ opacity: 0, y: 40 }}

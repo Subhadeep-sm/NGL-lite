@@ -33,15 +33,18 @@ function App() {
 
       <Route path="/messages" element={
       <>
+      {/* <div className="relative z-10 px-4 py-8 ">       */}
+  <AllMessagesPage />
+    {/* </div> */}
       <Aurora
   colorStops={["#2C225E", "#F15BB5", "#9B5DE5"]}
   blend={0.5}
   amplitude={2}
   speed={0.5}
-  className="max-h-screen"
+  className="fixed top-0 left-0 w-full h-full -z-10"
 />
 
-      <AllMessagesPage />
+
       </>
       } />
 
